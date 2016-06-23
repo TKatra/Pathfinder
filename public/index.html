@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Page Title</title>
+    <meta charset="utf-8">
+    <base href="/"/>
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- libs:js -->
+    <script src="libs/angular/angular.min.js"></script>
+    <script src="libs/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <!-- endinject -->
+
+    <!-- prio:js -->
+    <script src="config/config.js"></script>
+    <!-- endinject -->
+
+    <!-- inject:js -->
+    <script src="app.js"></script>
+    <script src="modules/main/main.js"></script>
+    <script src="modules/main/config/routes.js"></script>
+    <script src="modules/main/controllers/mainController.js"></script>
+    <!-- endinject -->
+  </head>
+  <body>
+    <div ui-view></div>
+  </body>
+</html>
