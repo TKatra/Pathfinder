@@ -3,12 +3,14 @@ header nav {
 
   li {
     display: inline-block;
-    margin: 0;
-    padding: 5px;
     background-color: #BBBBBB;
+    height: 50px;
     list-style: none;
 
     a {
+      display: inline-block;
+      height: 100%;
+      // padding: 10px;
       text-decoration: none;
     }
   }
