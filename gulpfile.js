@@ -3,6 +3,7 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var inject = require('gulp-inject');
+var wait = require('gulp-wait');
 // var browserSync = require('browser-sync').create();
 
 // gulp.task('browserSync', function() {
@@ -14,13 +15,12 @@ var inject = require('gulp-inject');
 // });
 
 gulp.task('sass', function() {
-  return gulp.src('./public/sass/main.scss')
+  return gulp.src('./public/sass/*.scss')
+    .pipe(wait(100))
     .pipe(sass({
       includePaths: ['styles'],
-      onError: function(err) {
-        console.log(err);
-      }
-    }))//.on('error', sass.logError))
+      outputStyle: 'expanded'
+    }).on('error', sass.logError))
     .pipe(gulp.dest('./public/css'))
     // .pipe(browserSync.reload({
     //   stream: true

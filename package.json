@@ -11,6 +11,7 @@
     "browser-sync": "^2.13.0",
     "gulp": "^3.9.1",
     "gulp-inject": "^4.1.0",
-    "gulp-sass": "^2.3.2"
+    "gulp-sass": "^2.3.2",
+    "gulp-wait": "0.0.2"
   }
 }
