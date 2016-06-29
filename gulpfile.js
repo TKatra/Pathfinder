@@ -15,8 +15,12 @@ var inject = require('gulp-inject');
 
 gulp.task('sass', function() {
   return gulp.src('./public/sass/main.scss')
-    .pipe(sass().on('error', sass.logError))
-    // .pipe(sass())
+    .pipe(sass({
+      includePaths: ['styles'],
+      onError: function(err) {
+        console.log(err);
+      }
+    }))//.on('error', sass.logError))
     .pipe(gulp.dest('./public/css'))
     // .pipe(browserSync.reload({
     //   stream: true
