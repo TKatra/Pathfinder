@@ -19,6 +19,12 @@
         controller: 'mainController',
         controllerAs: 'mainCtrl',
         templateUrl: 'modules/main/views/mainView.html'
+      })
+      .state('base.about', {
+        url: '/about',
+        controller: 'aboutController',
+        controllerAs: 'aboutCtrl',
+        templateUrl: 'modules/main/views/aboutView.html'
       });
   }
 })();
