@@ -1,9 +1,15 @@
+.map {
+  overflow: auto;
+  white-space: nowrap;
+}
+
 .map-row {
-  display: block;
+  // display: block;
   // background-color: #AAAAAA;
 }
 
 .row-item {
+  cursor: pointer;
   display: inline-block;
   width: 30px;
   height: 30px;

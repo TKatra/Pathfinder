@@ -7,9 +7,10 @@
   <input type="number" placeholder="Columns" ng-model="mainCtrl.columns">
   <input type="submit" value="Build Map!" ng-disabled="!mainCtrl.rows || !mainCtrl.columns">
 </form>
-
-<div class="map-row" ng-repeat="row in mainCtrl.map track by $index">
-  <div class="row-item" ng-repeat="item in row track by $index" ng-click="mainCtrl.mapItemClick($parent.$index, $index)">
-    <p>{{ item }}</p>
+<div class="map">
+  <div class="map-row" ng-repeat="row in mainCtrl.map track by $index">
+    <div class="row-item" ng-repeat="item in row track by $index" ng-click="mainCtrl.mapItemClick($parent.$index, $index)">
+      <p>{{ item }}</p>
+    </div>
   </div>
 </div>
