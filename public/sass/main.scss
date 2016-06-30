@@ -1,5 +1,11 @@
 @import 'headerMenu';
+@import 'map';
 
 main {
   display: block;
+  overflow: auto;
+}
+
+body {
+  font-family: sans-serif;
 }

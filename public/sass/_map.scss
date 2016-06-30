@@ -1,0 +1,25 @@
+.map-row {
+  display: block;
+  // background-color: #AAAAAA;
+}
+
+.row-item {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #000000;
+  background-color: #FFFFFF;
+  border-radius: 5px;
+
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+
+  p {
+    text-align: center;
+
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
