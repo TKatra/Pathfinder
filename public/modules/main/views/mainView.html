@@ -9,7 +9,7 @@
 </form>
 <div class="map">
   <div class="map-row noselect" ng-repeat="row in mainCtrl.map track by $index">
-    <div class="row-item " ng-class="{'fast-path': item.fastPath, 'slow-path': item.slowPath, 'player-path': item.playerPath}" ng-repeat="item in row track by $index" ng-click="mainCtrl.mapItemClick(item, $parent.$index, $index)">
+    <div class="row-item " ng-class="{'light-path': item.lightPath, 'heavy-path': item.heavyPath, 'player-path': item.playerPath}" ng-repeat="item in row track by $index" ng-click="mainCtrl.mapItemClick(item, $parent.$index, $index)">
       <p>{{ item.value }}</p>
     </div>
   </div>
