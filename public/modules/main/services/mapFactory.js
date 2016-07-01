@@ -14,11 +14,36 @@
 
     function getPaths(map) {
       console.log(map);
-      var allPaths = pathfinder(map);
-      console.log(allPaths);
-      console.log(arrayCleaner(allPaths));
+      var foundPaths = arrayCleaner(pathfinder(map));
+      console.log(foundPaths);
+      var topPaths = findTopPaths(foundPaths);
+      console.log(topPaths);
 
-      $rootScope.$emit('foundPaths', 'PARF');
+      $rootScope.$emit('pathsFound', topPaths);
+    }
+
+    function findTopPaths(paths) {
+      var topPaths = {
+        lightPath: {
+          pathValue: Number.MAX_VALUE,
+          path: []
+        },
+        heavyPath: {
+          pathValue: Number.MIN_VALUE,
+          path: []
+        }
+      };
+
+      for (var i = 0; i < paths.length; i++) {
+        if (paths[i].pathValue < topPaths.lightPath.pathValue) {
+          topPaths.lightPath = paths[i];
+        }
+        if (paths[i].pathValue > topPaths.heavyPath.pathValue) {
+          topPaths.heavyPath = paths[i];
+        }
+      }
+
+      return topPaths;
     }
 
     function pathfinder(map, row, col, currentPath) {
@@ -38,46 +63,32 @@
         col: col
       });
 
-      // console.log('(' + row +',' + col + '): ' + map[row][col].value);
       paths = [];
 
       if (col == 0 && map[row+1]) {
-        // console.log('HOP DOWN');
         paths.push(pathfinder(map, row+1));
       }
 
       if (col == map[row].length-1) {
-        // console.log('STOP');
         return currentPath;
       }
 
       if (map[row-1]) {
         if (map[row-1][col+1]) {
-          // console.log('up');
           nextPath = angular.copy(currentPath);
           paths.push(pathfinder(map, row-1, col+1, nextPath));
         }
       }
       if (map[row][col+1]) {
-        // console.log('forward');
         nextPath = angular.copy(currentPath);
         paths.push(pathfinder(map, row, col+1, nextPath));
       }
       if (map[row+1]) {
           if (map[row+1][col+1]) {
-          // console.log('down');
           nextPath = angular.copy(currentPath);
           paths.push(pathfinder(map, row+1, col+1, nextPath));
         }
       }
-
-
-
-      // console.log(paths);
-      
-      // console.log(arrayCleaner(paths));
-
-      // return arrayCleaner(paths);
       return paths;
     }
 
@@ -85,33 +96,16 @@
       cleanArray = cleanArray || [];
       index = index || 0;
 
-      // console.log('uncleanArray', uncleanArray);
-      // console.log('cleanArray', cleanArray);
-
       if (index < uncleanArray.length) {
         if (Array.isArray(uncleanArray[index])) {
           arrayCleaner(uncleanArray[index], cleanArray);
         }
         else {
           cleanArray.push(uncleanArray[index]);
-          // return uncleanArray[index];
         }
         arrayCleaner(uncleanArray, cleanArray, index+1);
       }
-
-      // console.log('Return', cleanArray);
       return cleanArray;
-
-
-
-
-      // var cleanArray = []
-      // for (var i = 0; i < uncleanArray.length; i++) {
-      //   if (uncleanArray[i]) {
-
-      //   }
-      //   else
-      // }
     }
   }
 })();
