@@ -17,9 +17,26 @@
   background-color: #FFFFFF;
   border-radius: 5px;
 
+  transition: background-color 0.2s;
+
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
   transform-style: preserve-3d;
+
+  &:hover {
+    background-color: #EEEEEE;
+  }
+
+  &.fast-path {
+    background-color: #40ff49;
+  }
+  &.slow-path {
+    background-color: #ff6666;
+  }
+  &.player-path {
+    background-color: #AAAAAA;
+    color: #FFFFFF;
+  }
 
   p {
     text-align: center;
