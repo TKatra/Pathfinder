@@ -13,7 +13,7 @@
     vm.buildMap = buildMap;
     vm.mapItemClick = mapItemClick;
 
-    $rootScope.$on('foundPaths', showPaths);
+    $rootScope.$on('pathsFound', showPaths);
 
     function buildMap() {
       var newMap = [];
