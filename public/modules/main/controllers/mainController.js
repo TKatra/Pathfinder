@@ -13,27 +13,56 @@
     vm.buildMap = buildMap;
     vm.mapItemClick = mapItemClick;
 
-    $rootScope.$on('pathsFound', activatePaths);
+    // $rootScope.$on('pathsFound', activatePaths);
+    // $rootScope.$on('mapBuilt', showMap);
+
+    function showMap(map) {
+      console.log('RETURN MAP');
+      console.log(map);
+      vm.map = map;
+      console.log('SHOWED MAP');
+      // mapFactory.getPaths(map);
+    }
 
     function buildMap() {
-      var newMap = [];
-      var newRow;
+      var mapData = {
+        rows: vm.rows,
+        columns: vm.columns
+      };
 
-      for (var i = 0; i < vm.rows; i++) {
-        newRow = [];
-        for (var k = 0; k < vm.columns; k++) {
-          newRow.push({
-            value: randomNumberBetween(1, 10),
-            lightPath: false,
-            heavyPath: false,
-            playerPath: false
-          });
-        }
-        newMap.push(newRow);
-      }
-      vm.map = angular.copy(newMap);
+      mapFactory.buildMap(mapData)
+        .then(function(data) {
 
-      mapFactory.getPaths(vm.map);
+          vm.map = data.data;
+          console.log('SHOWED MAP');
+
+          mapFactory.getPaths({map: vm.map})
+            .then(function(data) {
+              activatePaths(data.data);
+            });
+        });
+        // .then(function(data) {
+          // vm.map = data;
+          // mapFactory.getPaths(vm.map);
+        // });
+      // var newMap = [];
+      // var newRow;
+
+      // for (var i = 0; i < vm.rows; i++) {
+      //   newRow = [];
+      //   for (var k = 0; k < vm.columns; k++) {
+      //     newRow.push({
+      //       value: randomNumberBetween(1, 10),
+      //       lightPath: false,
+      //       heavyPath: false,
+      //       playerPath: false
+      //     });
+      //   }
+      //   newMap.push(newRow);
+      // }
+      // vm.map = angular.copy(newMap);
+
+      // mapFactory.getPaths(vm.map);
     }
 
     function mapItemClick(item , rowIndex, columnIndex) {
@@ -44,7 +73,8 @@
       console.log(item);
     }
 
-    function activatePaths(event, paths) {
+    function activatePaths(paths) {
+      console.log('RETURN PATHS');
       console.log(paths);
       vm.lightPath = paths.lightPath;
       vm.heavyPath = paths.heavyPath;
@@ -55,8 +85,6 @@
       }
     }
 
-    function randomNumberBetween(minNumber, maxNumber) {
-      return Math.floor((Math.random() * maxNumber) + minNumber);
-    }
+    
   }
 })();
