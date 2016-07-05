@@ -1,9 +1,6 @@
 'use strict';
 
 exports.create = function(req, res) {
-  // function buildMap(rows, columns)
-  console.log('BUILD MAP');
-  console.log(req.body);
   var newMap = [];
   var newRow;
 
@@ -21,38 +18,16 @@ exports.create = function(req, res) {
   }
 
   res.json(newMap);
-
-
-
-
-  // $rootScope.$emit('mapBuilt', newMap);
-  // getPaths(newMap);
-  // return newMap;
-  // vm.map = angular.copy(newMap);
-
-  // mapFactory.getPaths(vm.map);
 }
 
 exports.paths = function(req, res) {
-// function getPaths(map) {
-  console.log('GET PATHS');
-  // console.log(req.body.map);
-
   var foundPaths = arrayCleaner(pathfinder(req.body.map));
-  // console.log(foundPaths);
   var topPaths = findTopPaths(foundPaths);
-  // console.log(topPaths);
 
   res.json(topPaths);
-
-
-
-
-  // $rootScope.$emit('pathsFound', topPaths);
 }
 
 function arrayCleaner(uncleanArray, cleanArray, index) {
-  // console.log('CLEAN ARRAY');
   cleanArray = cleanArray || [];
   index = index || 0;
 
@@ -97,19 +72,16 @@ function pathfinder(map, row, col, currentPath) {
 
   if (map[row-1]) {
     if (map[row-1][col+1]) {
-      // nextPath = angular.copy(currentPath);
       nextPath = JSON.parse(JSON.stringify(currentPath));
       paths.push(pathfinder(map, row-1, col+1, nextPath));
     }
   }
   if (map[row][col+1]) {
-    // nextPath = angular.copy(currentPath);
     nextPath = JSON.parse(JSON.stringify(currentPath));
     paths.push(pathfinder(map, row, col+1, nextPath));
   }
   if (map[row+1]) {
       if (map[row+1][col+1]) {
-      // nextPath = angular.copy(currentPath);
       nextPath = JSON.parse(JSON.stringify(currentPath));
       paths.push(pathfinder(map, row+1, col+1, nextPath));
     }
@@ -118,7 +90,6 @@ function pathfinder(map, row, col, currentPath) {
 }
 
 function findTopPaths(paths) {
-  console.log('FIND TOP PATHS');
   var topPaths = {
     lightPath: {
       pathValue: Number.MAX_VALUE,
