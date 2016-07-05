@@ -1,4 +1,5 @@
 .map {
+  text-align: center;
   overflow: auto;
   white-space: nowrap;
 }
@@ -13,8 +14,13 @@
   display: inline-block;
   width: 30px;
   height: 30px;
-  border: 1px solid #000000;
-  background-color: #FFFFFF;
+  // border: 1px solid #000000;
+  border-top: 3px solid rgba(255,255,255, 0.6);
+  border-left: 3px solid rgba(255,255,255, 0.6);
+  border-right: 3px solid rgba(0,0,0, 0.6);
+  border-bottom: 3px solid rgba(0,0,0, 0.6);
+
+  background-color: #DDDDDD;//#8080ff
   border-radius: 5px;
 
   transition: background-color 0.2s;
@@ -24,7 +30,7 @@
   transform-style: preserve-3d;
 
   &:hover {
-    background-color: #EEEEEE;
+    background-color: #b3b3ff;//#b3b3ff
   }
 
   &.light-path {

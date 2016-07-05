@@ -1,8 +1,15 @@
 @import 'headerMenu';
+@import 'bottomMenu';
 @import 'map';
+
+body {
+  background-color: #000080;
+}
 
 main {
   display: block;
+  margin: 65px 0 65px;
+  
 }
 
 body {
