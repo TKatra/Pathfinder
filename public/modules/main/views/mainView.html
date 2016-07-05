@@ -2,9 +2,9 @@
 
 <form ng-submit="mainCtrl.buildMap()">
   <label>Rows</label>
-  <input type="number" placeholder="Rows" ng-model="mainCtrl.rows">
+  <input type="number" placeholder="Rows" ng-model="mainCtrl.rows" min="0" max="50">
   <label>Columns</label>
-  <input type="number" placeholder="Columns" ng-model="mainCtrl.columns">
+  <input type="number" placeholder="Columns" ng-model="mainCtrl.columns" min="0" max="10">
   <input type="submit" value="Build Map!" ng-disabled="!mainCtrl.rows || !mainCtrl.columns">
 </form>
 <div class="map">
