@@ -8,8 +8,14 @@
       <input type="submit" class="button" value="Build Map!" ng-disabled="!mainCtrl.rows || !mainCtrl.columns">
     </form>
 
-    <div class="vertical-center" ng-show="!mainCtrl.buildPhase">
-      <loading></loading>
+    <div class="content-split" ng-show="!mainCtrl.buildPhase">
+      <div class="content-part">
+        <loading ng-show="mainCtrl.showLoadingAnimation"></loading>
+      </div>
+      <div class="content-part">
+        <input type="button" class="button" value="Confirm Path">
+        <input type="button" class="button" value="Reset" ng-click="mainCtrl.resetMap()">
+      </div>
     </div>
   </div>
 </div>

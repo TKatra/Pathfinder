@@ -9,11 +9,15 @@
 
   function MainController($rootScope, mapFactory) {
     var vm = this;
-    vm.map = [];
+    vm.map;
+    vm.rows = 0;
+    vm.columns = 0;
     vm.buildPhase = true;
-    vm.loadingText = '';
+    vm.showLoadingAnimation = false;
+    vm.loadingText;
     vm.buildMap = buildMap;
     vm.mapItemClick = mapItemClick;
+    vm.resetMap = resetMap;
 
     function buildMap() {
       var mapData = {
@@ -22,6 +26,7 @@
       };
       vm.loadingText = 'Loading Map';
       vm.buildPhase = false;
+      vm.showLoadingAnimation = true;
 
       mapFactory.buildMap(mapData)
         .then(function(data) {
@@ -32,7 +37,11 @@
           mapFactory.getPaths({map: vm.map})
             .then(function(data) {
               vm.loadingText = '';
-              activatePaths(data.data);
+              vm.showLoadingAnimation = false;
+              vm.lightPath = data.data.lightPath;
+              vm.heavyPath = data.data.heavyPath;
+
+              activatePaths();
             });
         });
     }
@@ -41,10 +50,16 @@
       item.playerPath = !item.playerPath;
     }
 
-    function activatePaths(paths) {
-      vm.lightPath = paths.lightPath;
-      vm.heavyPath = paths.heavyPath;
+    function resetMap() {
+      vm.buildPhase = true;
+      vm.rows = 0;
+      vm.columns = 0;
+      vm.map = undefined;
+      vm.lightPath = undefined;
+      vm.heavyPath = undefined;
+    }
 
+    function activatePaths() {
       for (var i = 0; i < vm.columns; i++) {
         vm.map[vm.lightPath.path[i].row][vm.lightPath.path[i].col].lightPath = true;
         vm.map[vm.heavyPath.path[i].row][vm.heavyPath.path[i].col].heavyPath = true;
