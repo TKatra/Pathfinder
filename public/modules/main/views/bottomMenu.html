@@ -1,12 +1,15 @@
 <div class="bottom-menu">
   <div class="content">
-    <form class="vertical-center" ng-submit="mainCtrl.buildMap()">
+    <form class="vertical-center" ng-submit="mainCtrl.buildMap()" ng-show="mainCtrl.buildPhase">
       <label>Rows:</label>
-      <input type="number" ng-model="mainCtrl.rows" min="0" max="50">
+      <input type="number" ng-model="mainCtrl.rows" min="2" max="50">
       <label>Columns:</label>
-      <input type="number" ng-model="mainCtrl.columns" min="0" max="10">
-      <input type="submit" value="Build Map!" ng-disabled="!mainCtrl.rows || !mainCtrl.columns">
-    </form>  
+      <input type="number" ng-model="mainCtrl.columns" min="2" max="10">
+      <input type="submit" class="button" value="Build Map!" ng-disabled="!mainCtrl.rows || !mainCtrl.columns">
+    </form>
+
+    <div class="vertical-center" ng-show="!mainCtrl.buildPhase">
+      <loading></loading>
+    </div>
   </div>
-  
 </div>

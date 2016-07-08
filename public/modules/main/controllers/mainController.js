@@ -10,6 +10,8 @@
   function MainController($rootScope, mapFactory) {
     var vm = this;
     vm.map = [];
+    vm.buildPhase = true;
+    vm.loadingText = '';
     vm.buildMap = buildMap;
     vm.mapItemClick = mapItemClick;
 
@@ -18,14 +20,18 @@
         rows: vm.rows,
         columns: vm.columns
       };
+      vm.loadingText = 'Loading Map';
+      vm.buildPhase = false;
 
       mapFactory.buildMap(mapData)
         .then(function(data) {
 
           vm.map = data.data;
+          vm.loadingText = 'Loading Paths';
 
           mapFactory.getPaths({map: vm.map})
             .then(function(data) {
+              vm.loadingText = '';
               activatePaths(data.data);
             });
         });
