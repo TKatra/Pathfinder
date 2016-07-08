@@ -4,9 +4,11 @@ header nav {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #AAAAAA;
-  border-radius: 0 0 25px 25px;
   text-align: center;
+  background-color: #9999ff;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.4);
+  border-radius: 0 0 25px 25px;
+  box-shadow: 0 0 15px #222222;
 
   li {
     display: inline-block;
@@ -38,7 +40,7 @@ header nav {
       padding: 10px 0 10px;
       text-decoration: none;
       color: #000000;
-      background-color: #CCCCCC;
+      background-color: #ccccff;
       
 
       position: relative;
@@ -46,7 +48,7 @@ header nav {
       transform: translateY(-50%);
 
       &:hover {
-        background-color:#D2D2D2;
+        background-color:#e6e6ff;
       }
     }
   }
