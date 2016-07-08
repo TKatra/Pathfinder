@@ -5,17 +5,24 @@
   .module('main')
   .controller('mainController', MainController);
 
-  MainController.$inject = ['$rootScope', 'mapFactory'];
+  MainController.$inject = ['$rootScope', '$scope', 'mapFactory'];
 
-  function MainController($rootScope, mapFactory) {
+  function MainController($rootScope, $scope, mapFactory) {
     var vm = this;
     vm.map;
+    vm.playerPath = {
+      pathValue: 0,
+      path: []
+    };
     vm.rows = 0;
     vm.columns = 0;
     vm.buildPhase = true;
     vm.showLoadingAnimation = false;
     vm.loadingText;
+    vm.playerPathReady = false;
+    vm.pathsReady = false;
     vm.buildMap = buildMap;
+    vm.confirmPath = confirmPath;
     vm.mapItemClick = mapItemClick;
     vm.resetMap = resetMap;
 
@@ -32,6 +39,10 @@
         .then(function(data) {
 
           vm.map = data.data;
+          for (var i = 0; i < vm.map.length; i++) {
+            vm.map[i][0].selectable = true;
+          }
+
           vm.loadingText = 'Loading Paths';
 
           mapFactory.getPaths({map: vm.map})
@@ -41,13 +52,107 @@
               vm.lightPath = data.data.lightPath;
               vm.heavyPath = data.data.heavyPath;
 
-              activatePaths();
+              vm.pathsReady = true;
             });
         });
     }
 
-    function mapItemClick(item , rowIndex, columnIndex) {
-      item.playerPath = !item.playerPath;
+    function confirmPath() {
+      activatePaths();
+    }
+
+    function mapItemClick(item, rowIndex, columnIndex) {
+      if (item.selectable) {
+        item.playerPath = !item.playerPath;
+        
+        vm.playerPath.pathValue += item.value;
+
+        vm.playerPath.path.push({
+          row: rowIndex,
+          col: columnIndex,
+          value: item.value
+        });
+
+        for (var i = 0; i < vm.map.length; i++) {
+          vm.map[i][columnIndex].selectable = false;
+        }
+
+        if (vm.map[rowIndex-1]) {
+          if (vm.map[rowIndex-1][columnIndex+1]) {
+            vm.map[rowIndex-1][columnIndex+1].selectable = true;
+          }
+        }
+        if (vm.map[rowIndex][columnIndex+1]) {
+          vm.map[rowIndex][columnIndex+1].selectable = true;
+        }
+        if (vm.map[rowIndex+1]) {
+          if (vm.map[rowIndex+1][columnIndex+1]) {
+            vm.map[rowIndex+1][columnIndex+1].selectable = true;
+          }
+        }
+      }
+      else if (item.playerPath) {
+        item.playerPath = false;
+
+        var lastPathItem = vm.playerPath.path[vm.playerPath.path.length-1]
+
+        if (vm.map[lastPathItem.row-1]) {
+          if (vm.map[lastPathItem.row-1][lastPathItem.col+1]) {
+            vm.map[lastPathItem.row-1][lastPathItem.col+1].selectable = false;
+          }
+        }
+        if (vm.map[lastPathItem.row][lastPathItem.col+1]) {
+          vm.map[lastPathItem.row][lastPathItem.col+1].selectable = false;
+        }
+        if (vm.map[lastPathItem.row+1]) {
+          if (vm.map[lastPathItem.row+1][lastPathItem.col+1]) {
+            vm.map[lastPathItem.row+1][lastPathItem.col+1].selectable = false;
+          }
+        }
+
+        for (var i = vm.playerPath.path.length-1; i >= columnIndex; i--) {
+          var row = vm.playerPath.path[i].row;
+          var col = vm.playerPath.path[i].col;
+          vm.map[row][col].playerPath = false;
+
+          vm.playerPath.path.splice(i, 1);
+        }
+        
+        vm.playerPath.pathValue = 0;
+
+        for (var i = 0; i < vm.playerPath.path.length; i++) {
+          vm.playerPath.pathValue += vm.playerPath.path[i].value;
+        }
+
+        if (vm.playerPath.path.length) {
+          lastPathItem = vm.playerPath.path[vm.playerPath.path.length-1];
+
+          if (vm.map[lastPathItem.row-1]) {
+            if (vm.map[lastPathItem.row-1][lastPathItem.col+1]) {
+              vm.map[lastPathItem.row-1][lastPathItem.col+1].selectable = true;
+            }
+          }
+          if (vm.map[lastPathItem.row][lastPathItem.col+1]) {
+            vm.map[lastPathItem.row][lastPathItem.col+1].selectable = true;
+          }
+          if (vm.map[lastPathItem.row+1]) {
+            if (vm.map[lastPathItem.row+1][lastPathItem.col+1]) {
+              vm.map[lastPathItem.row+1][lastPathItem.col+1].selectable = true;
+            }
+          }
+        }
+        else {
+          for (var i = 0; i < vm.map.length; i++) {
+            vm.map[i][0].selectable = true;
+          }
+        }
+      }
+      if (vm.playerPath.path.length === vm.columns) {
+        vm.playerPathReady = true;
+      }
+      else {
+        vm.playerPathReady = false;
+      }
     }
 
     function resetMap() {

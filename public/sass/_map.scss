@@ -10,7 +10,7 @@
 }
 
 .row-item {
-  cursor: pointer;
+  cursor: default;
   display: inline-block;
   width: 30px;
   height: 30px;
@@ -29,12 +29,20 @@
   -moz-transform-style: preserve-3d;
   transform-style: preserve-3d;
 
-  &:hover {
-    background-color: #b3b3ff;//#b3b3ff
+  &.selectable {
+    cursor: pointer;
+    background-color: #ffff99;
+
+    &:hover {
+      background-color: #b3b3ff;//#b3b3ff
+    }
   }
 
   &.light-path {
     background-color: #40ff49;
+    &.heavy-path {
+      background-color: #ffd480;
+    }
   }
   &.heavy-path {
     background-color: #ff6666;

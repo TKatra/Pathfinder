@@ -11,7 +11,8 @@ exports.create = function(req, res) {
         value: randomNumberBetween(1, 10),
         lightPath: false,
         heavyPath: false,
-        playerPath: false
+        playerPath: false,
+        selectable: false
       });
     }
     newMap.push(newRow);

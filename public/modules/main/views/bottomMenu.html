@@ -13,7 +13,7 @@
         <loading ng-show="mainCtrl.showLoadingAnimation"></loading>
       </div>
       <div class="content-part">
-        <input type="button" class="button" value="Confirm Path">
+        <input type="button" class="button" value="Confirm Path" ng-disabled="!mainCtrl.pathsReady || !mainCtrl.playerPathReady" ng-click="mainCtrl.confirmPath()">
         <input type="button" class="button" value="Reset" ng-click="mainCtrl.resetMap()">
       </div>
     </div>
