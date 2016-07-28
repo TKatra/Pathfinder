@@ -9,6 +9,8 @@
 
   function MainController($rootScope, $scope, mapFactory) {
     var vm = this;
+    var topPaths;
+
     vm.map;
     vm.playerPath = {
       pathValue: 0,
@@ -49,8 +51,9 @@
             .then(function(data) {
               vm.loadingText = '';
               vm.showLoadingAnimation = false;
-              vm.lightPath = data.data.lightPath;
-              vm.heavyPath = data.data.heavyPath;
+              // vm.lightPath = data.data.lightPath;
+              // vm.heavyPath = data.data.heavyPath;
+              topPaths = data.data;
 
               vm.pathsReady = true;
             });
@@ -160,14 +163,52 @@
       vm.rows = 0;
       vm.columns = 0;
       vm.map = undefined;
+      vm.playerPath = {
+        pathValue: 0,
+        path: []
+      };
       vm.lightPath = undefined;
       vm.heavyPath = undefined;
+      vm.playerPathReady = false;
     }
 
     function activatePaths() {
-      for (var i = 0; i < vm.columns; i++) {
-        vm.map[vm.lightPath.path[i].row][vm.lightPath.path[i].col].lightPath = true;
-        vm.map[vm.heavyPath.path[i].row][vm.heavyPath.path[i].col].heavyPath = true;
+      var colIndex = 0;
+      var heavyRow = topPaths.heavyPath.startRow;
+      var lightRow = topPaths.lightPath.startRow;
+
+      vm.map[heavyRow][colIndex].heavyPath = true;
+      vm.map[lightRow][colIndex].lightPath = true;
+
+      console.log('heavyPath', topPaths.heavyPath);
+      console.log(topPaths.heavyPath.path);
+      console.log('lightPath', topPaths.lightPath);
+      console.log(topPaths.lightPath.path);
+
+      colIndex = 1;
+      for (var i = 0; i < vm.columns - 1; i++) {
+        // vm.map[vm.lightPath.path[i].row][vm.lightPath.path[i].col].lightPath = true;
+        // vm.map[vm.heavyPath.path[i].row][vm.heavyPath.path[i].col].heavyPath = true;
+        heavyRow = nextPathRow(heavyRow, topPaths.heavyPath.path[i]);
+        lightRow = nextPathRow(lightRow, topPaths.lightPath.path[i]);
+
+        vm.map[heavyRow][colIndex].heavyPath = true;
+        vm.map[lightRow][colIndex].lightPath = true;
+        colIndex++;
+      }
+    }
+
+    function nextPathRow (row, stepNumber) {
+      // console.log(row);
+      // console.log(stepNumber);
+      if (stepNumber === 0) {
+        return row - 1;
+      }
+      else if (stepNumber === 1) {
+        return row;
+      }
+      else if (stepNumber === 2) {
+        return row + 1;
       }
     }
   }
